@@ -34,23 +34,28 @@ export default async function FollowingLeague() {
   const competitionList = leagues.competitions
 
   return (
-    <div className="h-full flex align-middle overflow-y-auto flex-col p-4 pr-0">
-      <div className="text-neutral-950 font-bold">Following Leagues</div>
-      <div className="flex-1 my-1 ">
-        {competitionList &&
-          competitionList.map((item) => (
-            <div className="grid gap-1 grid-cols-6 p-2" key={item.id}>
-              <Image
-                src={item.emblem}
-                className="col-span-1"
-                width={25}
-                height={25}
-                alt={item.code}
-              />
-              <div className="col-span-5 text-green-900/70">{item.name}</div>
-            </div>
-          ))}
-      </div>
+    <div className="flex-1 overflow-y-auto pr-1">
+      {competitionList?.map((item) => (
+        <div
+          key={item.id}
+          className="flex items-center gap-3 p-2 pl-6 rounded-lg hover:bg-gray-50 
+                 active:bg-gray-200 transition-all duration-200 cursor-pointer"
+        >
+          <Image
+            src={item.emblem}
+            width={26}
+            height={26}
+            alt={item.code}
+            className="flex-shrink-0 object-contain drop-shadow-sm"
+          />
+          <span className="text-sm font-medium text-gray-700 truncate">
+            {item.name}
+            <span className="block text-xs text-gray-400 mt-0.5">
+              {item.area.name}
+            </span>
+          </span>
+        </div>
+      ))}
     </div>
   );
 }
