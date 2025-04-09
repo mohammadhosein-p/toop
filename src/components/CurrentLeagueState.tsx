@@ -1,53 +1,9 @@
+import { Standing } from "@/interface/currentLeagueState";
 import { fetchData } from "@/lib/FetchData";
-import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-type Table = {
-  draw: number;
-  goalDifference: number;
-  goalsAgainst: number;
-  goalsFor: number;
-  lost: number;
-  playedGames: number;
-  points: number;
-  position: number;
-  won: number;
-  team: {
-    crest: string;
-    id: number;
-    name: string;
-    shortName: string;
-    tla: string;
-  };
-};
-
-type Standing = {
-  area: {
-    code: string;
-    flag: string;
-    id: number;
-    name: string;
-  };
-  competition: {
-    code: string;
-    emblem: string;
-    id: number;
-    name: string;
-  };
-  season: {
-    currentMatchday: number;
-    id: number;
-    endDate: string;
-  };
-  standings: {
-    stage: string;
-    type: string;
-    group: string | null;
-    table: Table[];
-  }[];
-};
 
 type Props = {
   standingParam?: string;
@@ -75,7 +31,6 @@ export default async function CurrentLeagueState({ standingParam }: Props) {
         </h2>
       </div>
 
-      {/* جدول فشرده */}
       <div className="text-sm text-emerald-950">
         {standingResult.standings.map((standingGroup) => (
           <div key={standingGroup.type} className="mb-1 overflow-y-auto">
@@ -109,9 +64,9 @@ export default async function CurrentLeagueState({ standingParam }: Props) {
                         <span className="truncate">{team.team.tla}</span>
                       </div>
                     </td>
-                    <td className="py-1.5 text-center pl-2 text-green-400 font-medium">{team.won}</td>
-                    <td className="py-1.5 text-center pl-2 text-yellow-400 font-medium">{team.draw}</td>
-                    <td className="py-1.5 text-center pl-2 text-red-400 font-medium">{team.lost}</td>
+                    <td className="py-1.5 text-center pl-2 text-green-500/90 font-medium">{team.won}</td>
+                    <td className="py-1.5 text-center pl-2 text-yellow-500/90 font-medium">{team.draw}</td>
+                    <td className="py-1.5 text-center pl-2 text-red-500/90 font-medium">{team.lost}</td>
                     <td className="py-1.5 text-center pl-2 font-medium">{team.points}</td>
                   </tr>
                 ))}

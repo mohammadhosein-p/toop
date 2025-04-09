@@ -1,9 +1,11 @@
+import Competitions from "@/components/CompetitionsSchedule";
 import CurrentLeagueState from "@/components/CurrentLeagueState";
 import FollowingLeague from "@/components/FollowingLeague";
 
 type Params = {
   searchParams: {
     standing?: string;
+    competition?: string;
   };
 };
 
@@ -20,8 +22,8 @@ export default function Home({ searchParams }: Params) {
         </div>
       </div>
 
-      <div className="col-span-6 bg-green-100 rounded-lg p-4 overflow-auto">
-        بخش وسط
+      <div className="col-span-6 bg-gray-200 h-[95vh] rounded-lg overflow-y-hidden">
+        <Competitions competitionParam={searchParams.competition} />
       </div>
 
       <div className="col-span-3 bg-green-200 rounded-lg p-4 overflow-auto">

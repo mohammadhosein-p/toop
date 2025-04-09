@@ -1,31 +1,6 @@
+import { LeaguesResponse } from "@/interface/followingLeague";
 import { fetchData } from "@/lib/FetchData";
-import axios from "axios";
 import Image from "next/image";
-
-type Competition = {
-  id: number;
-  area: {
-    id: number;
-    name: string;
-    code: string;
-    flag: string;
-  };
-  code: string;
-  currentSeason: {
-    currentMatchDay: number;
-    endDate: string;
-    id: number;
-    startDate: string;
-    winner: null | string;
-  };
-  emblem: string;
-  lastUpdate: string;
-  name: string;
-};
-
-type LeaguesResponse = {
-  competitions: Competition[];
-};
 
 export default async function FollowingLeague() {
   const leagues = await fetchData<LeaguesResponse>(
@@ -35,6 +10,7 @@ export default async function FollowingLeague() {
 
   return (
     <div className="flex-1 overflow-y-auto pr-1">
+      <div className="p-4 font-bold text-green-800">Following competitions</div>
       {competitionList?.map((item) => (
         <div
           key={item.id}
