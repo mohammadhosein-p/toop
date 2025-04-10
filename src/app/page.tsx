@@ -6,7 +6,7 @@ import { Suspense } from "react";
 type Params = {
   searchParams: {
     standing?: string;
-    competition?: string;
+    date?: string;
   };
 };
 
@@ -21,15 +21,19 @@ export default function Home({ searchParams }: Params) {
         </div>
 
         <div className="bg-gray-200 rounded-lg p-4 h-[54vh] overflow-y-auto">
-          <Suspense fallback={<p>Fetching League State...</p>}>
+          <Suspense
+            fallback={<p className="text-red-600">Fetching League State...</p>}
+          >
             <CurrentLeagueState standingParam={searchParams.standing} />
           </Suspense>
         </div>
       </div>
 
       <div className="col-span-6 bg-gray-200 h-[95vh] rounded-lg overflow-y-hidden">
-        <Suspense fallback={<p>Fetching Competitions...</p>}>
-          <ScheduleContainer competitionParam={searchParams.competition} />
+        <Suspense
+          fallback={<p className="text-red-600">Fetching Competitions...</p>}
+        >
+          <ScheduleContainer date={searchParams.date || ""} />
         </Suspense>
       </div>
 

@@ -18,17 +18,12 @@ export default function ScheduleItem({ match }: Props) {
     setExpanded((prev) => !prev);
   };
 
-  const formattedDate = new Date(match.utcDate).toLocaleString("en-US", {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-
   return (
     <motion.li
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
-      className="bg-white rounded-xl shadow-sm p-4 pb-2 mb-3 w-full max-w-2xl mx-auto hover:shadow-md transition-shadow duration-300"
+      className="bg-white rounded-xl shadow-sm p-4 pb-2 mb-3 w-full max-w-2xl mx-auto hover:shadow-lg transition-shadow duration-300"
     >
       <div className="flex items-center justify-between gap-4">
         {match.status === "FINISHED" ? (
@@ -36,7 +31,20 @@ export default function ScheduleItem({ match }: Props) {
             FT
           </p>
         ) : (
-          <p className="text-sm text-gray-500 min-w-fit">{formattedDate}</p>
+          <motion.p
+            transition={{
+              ease: "easeIn",
+              duration: .3
+            }}
+            className="text-sm text-gray-500 min-w-fit"
+          >
+            {new Date(match.utcDate).toLocaleString("en-US", {
+              day: isExpanded ? "numeric" : undefined,
+              month: isExpanded ? "short" : undefined,
+              hour: "2-digit",
+              minute: "2-digit",
+            })}
+          </motion.p>
         )}
 
         <motion.div
@@ -47,10 +55,7 @@ export default function ScheduleItem({ match }: Props) {
             duration: 0.3,
           }}
         >
-          <motion.div
-            layout
-            transition={{ duration: 0.3 }}
-          >
+          <motion.div layout transition={{ duration: 0.3 }}>
             <Image
               src={match.homeTeam.crest}
               alt={match.homeTeam.tla}

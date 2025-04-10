@@ -34,11 +34,18 @@ export default function CurrentLeagueItem({
         visible: {
           opacity: 1,
           transition: {
-            staggerChildren: .25,
+            staggerChildren: 0.25,
           },
         },
       }}
+      transition={{
+        type: "spring"
+      }}  
       key={team.id}
+      whileHover={{
+        scale: 1.1,
+        backgroundColor: "oklch(97.9% 0.021 166.113)",
+      }}
       className="border-b border-gray-100 last:border-0"
     >
       <motion.td

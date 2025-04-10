@@ -33,8 +33,8 @@ export default async function CurrentLeagueState({ standingParam }: Props) {
 
       <div className="text-sm text-emerald-950">
         {standingResult.standings.map((standingGroup) => (
-          <div key={standingGroup.type} className="mb-1 overflow-y-auto">
-            <table className="w-full">
+          <div key={standingGroup.type} className="mb-1">
+            <table className="w-[90%] mx-auto mb-1">
               <thead>
                 <tr className="text-center border-b">
                   <th className="pb-1 pr-2 text-left w-7">#</th>

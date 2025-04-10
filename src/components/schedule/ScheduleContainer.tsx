@@ -4,9 +4,11 @@ import {
 } from "@/interface/competitionSchedule";
 import { fetchData } from "@/lib/FetchData";
 import ScheduleCard from "./ScheduleCard";
+import DateCarousel from "./DateCarousel";
+import { format } from "date-fns";
 
 type Props = {
-  competitionParam?: string;
+  date?: string;
 };
 
 const PRIORITY_COMPETITIONS = [
@@ -15,12 +17,17 @@ const PRIORITY_COMPETITIONS = [
   "Serie A",
 ];
 
-export default async function ScheduleContainer({ competitionParam }: Props) {
-  const scheduleData = await fetchData<ScheduleResponse>(
-    `http://api.football-data.org/v4/matches?date=2025-04-16`
+export default async function ScheduleContainer({ date }: Props) {
+  const selectedDate = date
+    ? format(new Date(date), "yyyy-MM-dd")
+    : format(new Date(), "yyyy-MM-dd");
+  console.log("selectedDate", selectedDate);
+
+  let scheduleData: ScheduleResponse | null = null;
+  scheduleData  = await fetchData<ScheduleResponse>(
+    `http://api.football-data.org/v4/matches?date=${selectedDate}`
   );
 
-  console.log(scheduleData)
   const matchesByCompetition: { [key: string]: FootballMatch[] } = {};
 
   if (scheduleData?.resultSet?.count > 0 && scheduleData.matches) {
@@ -45,20 +52,26 @@ export default async function ScheduleContainer({ competitionParam }: Props) {
     }
   );
 
-  console.log(sortedCompetitions);
-
   return (
     <div className="flex flex-col h-full space-y-4 pl-4 pt-4">
       <h1 className="text-2xl font-bold text-emerald-900">Competitions</h1>
 
+      <DateCarousel />
+      
       <div className="flex-1 overflow-y-auto space-y-4 pr-4 pb-3">
-        {sortedCompetitions.map(([competitionName, matches]) => (
-          <ScheduleCard
-            isPriority={PRIORITY_COMPETITIONS.includes(competitionName)}
-            matches={matches}
-            key={competitionName}
-          />
-        ))}
+        {sortedCompetitions.length > 0 ? (
+          sortedCompetitions.map(([competitionName, matches]) => (
+            <ScheduleCard
+              isPriority={PRIORITY_COMPETITIONS.includes(competitionName)}
+              matches={matches}
+              key={competitionName}
+            />
+          ))
+        ) : (
+          <div className="text-center py-8 text-gray-500">
+            No matches scheduled for this date
+          </div>
+        )}
       </div>
     </div>
   );
