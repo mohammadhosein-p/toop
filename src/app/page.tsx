@@ -2,6 +2,7 @@ import ScheduleContainer from "@/components/schedule/ScheduleContainer";
 import CurrentLeagueState from "@/components/current_league_state/CurrentLeagueState";
 import FollowingLeague from "@/components/folllowing_league/FollowingLeague";
 import { Suspense } from "react";
+import NewsContainer from "@/components/news_section/NewsContainer";
 
 type Params = {
   searchParams: {
@@ -37,8 +38,10 @@ export default function Home({ searchParams }: Params) {
         </Suspense>
       </div>
 
-      <div className="col-span-3 bg-green-200 rounded-lg p-4 overflow-auto">
-        بخش راست
+      <div className="col-span-3 bg-gray-200 rounded-lg p-4 h-[95vh] overflow-y-auto">
+        <Suspense fallback={<p>Fetching news...</p>}>
+          <NewsContainer />
+        </Suspense>
       </div>
     </div>
   );
