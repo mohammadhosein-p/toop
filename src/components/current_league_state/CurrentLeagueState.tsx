@@ -3,7 +3,7 @@ import { fetchData } from "@/lib/FetchData";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-
+import CurrentLeagueItem from "./CurrentLeagueItem";
 
 type Props = {
   standingParam?: string;
@@ -14,7 +14,7 @@ export default async function CurrentLeagueState({ standingParam }: Props) {
   const standingResult = await fetchData<Standing>(
     `http://api.football-data.org/v4/competitions/${standing}/standings`
   );
-  console.log(standingResult)
+  console.log(standingResult);
 
   return (
     <div className="bg-white rounded-lg p-2 shadow-sm">
@@ -46,29 +46,16 @@ export default async function CurrentLeagueState({ standingParam }: Props) {
                 </tr>
               </thead>
               <tbody>
-                {standingGroup.table.map((team) => (
-                  <tr
+                {standingGroup.table.map((team, index) => (
+                  <CurrentLeagueItem
                     key={team.team.id}
-                    className="border-b border-gray-100 last:border-0"
-                  >
-                    <td className="py-1.5 pr-2">{team.position}</td>
-                    <td className="py-1.5">
-                      <div className="flex items-center gap-1.5 truncate">
-                        <Image
-                          src={team.team.crest}
-                          alt={team.team.tla}
-                          width={16}
-                          height={16}
-                          className="w-4 h-4 object-contain"
-                        />
-                        <span className="truncate">{team.team.tla}</span>
-                      </div>
-                    </td>
-                    <td className="py-1.5 text-center pl-2 text-green-500/90 font-medium">{team.won}</td>
-                    <td className="py-1.5 text-center pl-2 text-yellow-500/90 font-medium">{team.draw}</td>
-                    <td className="py-1.5 text-center pl-2 text-red-500/90 font-medium">{team.lost}</td>
-                    <td className="py-1.5 text-center pl-2 font-medium">{team.points}</td>
-                  </tr>
+                    team={team.team}
+                    position={index + 1}
+                    won={team.won}
+                    lost={team.lost}
+                    points={team.points}
+                    draw={team.draw}
+                  />
                 ))}
               </tbody>
             </table>
