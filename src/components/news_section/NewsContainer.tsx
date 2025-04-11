@@ -7,8 +7,10 @@ const YOUR_API_KEY = "6a790959624d4768a1854566eab9130a";
 
 export default async function NewsContainer() {
   const response = await fetchData<NewsResponse>(
-    `https://newsapi.org/v2/everything?q="Soccer"&apiKey=${YOUR_API_KEY}`
+    `https://newsapi.org/v2/everything?q="soccer" OR "Champions League" OR "Premier League" OR "FIFA"&sortBy=publishedAt&language=en&apiKey=${YOUR_API_KEY}`
   );
+
+  console.log(response);
 
   if (!response || response.status !== "ok" || response.articles.length === 0) {
     return (

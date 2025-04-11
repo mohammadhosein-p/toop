@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Article } from "@/interface/news";
 import { useEffect, useState } from "react";
 import { IoClose } from "react-icons/io5";
+import { IoIosArrowBack } from "react-icons/io";
 
 type Props = {
   isVisible: boolean;
@@ -19,6 +20,7 @@ export default function NewsItemMaximized({
   origin,
 }: Props) {
   const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
+  const [isFullImage, setFullImage] = useState(false);
 
   useEffect(() => {
     setWindowSize({
@@ -33,10 +35,11 @@ export default function NewsItemMaximized({
         <>
           {/* Backdrop */}
           <motion.div
-            className="fixed inset-0 bg-black/60 z-40 h-[100vh]"
+            className="fixed inset-0 bg-black/60 z-40 h-full"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            onClick={onClose}
           />
 
           {/* Modal */}
@@ -57,40 +60,64 @@ export default function NewsItemMaximized({
             }}
             transition={{ duration: 0.4, ease: "easeInOut" }}
           >
-            <div className="bg-white max-w-6xl w-full mx-4 rounded-2xl overflow-hidden relative shadow-2xl">
-              <button
-                onClick={onClose}
-                className="absolute top-4 right-4 z-10 bg-black/70 text-white p-1 rounded-full text-xl cursor-pointer hover:bg-black"
+            {/* Prevent backdrop click from closing when clicking inside modal */}
+            <div
+              className="bg-white max-w-6xl w-full mx-4 rounded-2xl overflow-hidden relative shadow-2xl h-[80vh]"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <motion.button
+                onClick={() => {
+                  isFullImage ? setFullImage(false) : onClose();
+                }}
+                className="absolute top-4 right-4 z-50 bg-black/70 text-white p-1 rounded-full text-xl cursor-pointer hover:bg-black"
               >
-                <IoClose />
-              </button>
+                {isFullImage ? <IoIosArrowBack /> : <IoClose />}
+              </motion.button>
 
-              <div className="flex flex-row max-h-[90vh]">
+              <div className="flex h-full w-full">
                 {article.urlToImage && (
-                  <img
+                  <motion.img
+                    onClick={() => setFullImage((prev) => !prev)}
                     src={article.urlToImage}
                     alt={article.title}
-                    className="w-[60%] object-cover max-h-[90vh]"
+                    className={`h-full mx-auto w-[${
+                      isFullImage ? "100%" : "60%"
+                    }] cursor-pointer`}
+                    initial={false}
+                    animate={{
+                      height: isFullImage ? "100%" : "auto",
+                      // width: isFullImage ? "100%" : "60%",
+                      objectFit: isFullImage ? "contain" : "cover",
+                    }}
+                    layout
+                    transition={{ duration: 0.5 }}
                   />
                 )}
 
-                <div className="w-[40%] flex flex-col p-6 overflow-hidden">
-                  <a href={article.url} target="_blank">
-                    <h2 className="hover:text-emerald-600 transition-all hover:underline cursor-pointer text-2xl text-emerald-900 font-bold mb-4">
-                      {article.title}
-                    </h2>
-                  </a>
-
-                  <div
-                    className="overflow-y-auto text-sm text-gray-600 pr-2"
-                    style={{ maxHeight: "calc(90vh - 100px)" }}
+                {!isFullImage && (
+                  <motion.div
+                    initial={false}
+                    animate={{ width: "40%", padding: "1.5rem" }}
+                    transition={{ duration: 0.125 }}
+                    className="overflow-hidden flex flex-col"
                   >
-                    <p className="text-emerald-700/80 text-lg my-1 mb-2">
-                      {article.description}
-                    </p>
-                    <p>{article.content}</p>
-                  </div>
-                </div>
+                    <a href={article.url} target="_blank">
+                      <h2 className="hover:text-emerald-600 transition-all hover:underline cursor-pointer text-2xl text-emerald-900 font-bold mb-4">
+                        {article.title}
+                      </h2>
+                    </a>
+
+                    <div
+                      className="overflow-y-auto text-sm text-gray-600 pr-2"
+                      style={{ maxHeight: "calc(90vh - 100px)" }}
+                    >
+                      <p className="text-emerald-700/80 text-lg my-1 mb-2">
+                        {article.description}
+                      </p>
+                      <p>{article.content?.split("…")[0]}...</p>
+                    </div>
+                  </motion.div>
+                )}
               </div>
             </div>
           </motion.div>

@@ -15,7 +15,6 @@ export default function NewsItem({ article }: Props) {
   const [origin, setOrigin] = useState({ x: 0, y: 0 });
 
   const handleCardClick = (e: React.MouseEvent) => {
-    console.log(e)
     const rect = (e.target as HTMLElement).getBoundingClientRect();
     setOrigin({ x: rect.left - 200 , y: rect.top + rect.height / 2 });
     setIsExpanded(false);
