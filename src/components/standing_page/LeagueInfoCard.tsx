@@ -4,14 +4,17 @@ import { Standing } from "@/interface/currentLeagueState";
 import { fetchData } from "@/lib/FetchData";
 import Image from "next/image";
 import { format } from "date-fns";
+import Link from "next/link";
 
 type Props = {
   standing: string;
 };
 
-export default async function LeagueInfoCard({standing}: Props) {
+export default async function LeagueInfoCard({ standing }: Props) {
   const standingResult = await fetchData<Standing>(
-    `http://api.football-data.org/v4/competitions/${standing || "PL"}/standings`,
+    `http://api.football-data.org/v4/competitions/${
+      standing || "PL"
+    }/standings`,
     ["standing", standing]
   );
   console.log(standingResult);
@@ -19,7 +22,7 @@ export default async function LeagueInfoCard({standing}: Props) {
   const { competition, area, season, filters } = standingResult;
 
   return (
-    <div className="bg-gray-100 text-black rounded-lg p-4 h-full flex flex-col gap-5">
+    <div className="bg-gray-100 text-black rounded-lg p-4 h-full flex flex-col gap-3">
       <div>
         <div className="flex flex-row items-center gap-3">
           <Image
@@ -32,7 +35,7 @@ export default async function LeagueInfoCard({standing}: Props) {
             {competition.name}
           </h2>
         </div>
-        <div className="pl-5 flex flex-row items-center mt-1 gap-3">
+        <div className="flex flex-row items-centerx gap-3">
           <Image
             src={area.flag}
             alt={competition.name}
@@ -50,6 +53,13 @@ export default async function LeagueInfoCard({standing}: Props) {
         <p>Matchday: {season.currentMatchday}</p>
         <p>Starts: {format(new Date(season.startDate), "yyyy-MM-dd")}</p>
         <p>Ends: {format(new Date(season.endDate), "yyyy-MM-dd")}</p>
+
+        <Link
+          href={"/"}
+          className="text-sm text-emerald-700/80 cursor-pointer hover:underline"
+        >
+          Home Page...
+        </Link>
       </div>
     </div>
   );

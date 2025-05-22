@@ -12,7 +12,7 @@ export default async function FollowingLeague() {
 
   return (
     <div className="flex-1 overflow-y-auto pr-1">
-      <div className="p-4 font-bold text-green-800">Following competitions</div>
+      <div className="p-4 font-bold text-green-800">All Competitions</div>
       {competitionList?.map((item) => (
         <Link href={`/standing?league=${item.id}`}>
           <div
