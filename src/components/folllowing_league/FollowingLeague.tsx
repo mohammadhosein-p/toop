@@ -14,9 +14,8 @@ export default async function FollowingLeague() {
     <div className="flex-1 overflow-y-auto pr-1">
       <div className="p-4 font-bold text-green-800">All Competitions</div>
       {competitionList?.map((item) => (
-        <Link href={`/standing?league=${item.id}`}>
+        <Link href={`/standing?league=${item.id}`} key={item.id}>
           <div
-            key={item.id}
             className="flex items-center gap-3 p-2 pl-6 rounded-lg hover:bg-gray-50 
           active:bg-gray-200 transition-all duration-200 cursor-pointer"
           >

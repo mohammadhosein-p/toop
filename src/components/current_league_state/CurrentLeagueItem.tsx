@@ -3,6 +3,8 @@
 import Image from "next/image";
 import React from "react";
 import { motion } from "framer-motion";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 type Props = {
   team: {
@@ -25,10 +27,13 @@ export default function CurrentLeagueItem({
   won,
   position,
 }: Props) {
+  const router = useRouter();
+
   return (
     <motion.tr
       initial="hidden"
       animate="visible"
+      onClick={() => router.push(`/team/${team.id}`)}
       variants={{
         hidden: { opacity: 0 },
         visible: {
@@ -39,14 +44,14 @@ export default function CurrentLeagueItem({
         },
       }}
       transition={{
-        type: "spring"
-      }}  
+        type: "spring",
+      }}
       key={team.id}
       whileHover={{
         scale: 1.1,
         backgroundColor: "oklch(97.9% 0.021 166.113)",
       }}
-      className="border-b border-gray-100 last:border-0"
+      className="border-b cursor-pointer border-gray-100 last:border-0"
     >
       <motion.td
         variants={{
@@ -78,7 +83,6 @@ export default function CurrentLeagueItem({
         </div>
       </motion.td>
 
-      {/* ستون‌های دیگر (انیمیشن از راست) */}
       {[won, draw, lost, points].map((value, index) => (
         <motion.td
           key={index}

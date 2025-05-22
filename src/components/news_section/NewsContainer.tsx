@@ -5,9 +5,13 @@ import NewsItem from "./NewsItem";
 
 const YOUR_API_KEY = "6a790959624d4768a1854566eab9130a";
 
-export default async function NewsContainer() {
+type Props = {
+  filter?: string;
+}
+
+export default async function NewsContainer({filter} : Props) {
   const response = await fetchData<NewsResponse>(
-    `https://newsapi.org/v2/everything?q="soccer" OR "Champions League" OR "Premier League" OR "FIFA"&sortBy=publishedAt&language=en&apiKey=${YOUR_API_KEY}`,
+    `https://newsapi.org/v2/everything?q=${filter || `"soccer" OR "Champions League" OR "Premier League" OR "FIFA"`}&sortBy=publishedAt&language=en&apiKey=${YOUR_API_KEY}`,
     ["news"]
   );
 

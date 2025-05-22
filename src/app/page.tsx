@@ -23,7 +23,7 @@ export default function Home({ searchParams }: Params) {
 
         <div className="bg-gray-200 rounded-lg p-4 h-[54vh] overflow-y-auto">
           <Suspense
-            fallback={<p className="text-red-600">Fetching League State...</p>}
+            fallback={<p className="text-emerald-700/80 mx-auto pt-10">Fetching League State...</p>}
           >
             <CurrentLeagueState standingParam={searchParams.standing} />
           </Suspense>
@@ -32,7 +32,7 @@ export default function Home({ searchParams }: Params) {
 
       <div className="col-span-6 bg-gray-200 h-[95vh] rounded-lg overflow-y-hidden">
         <Suspense
-          fallback={<p className="text-red-600">Fetching Competitions...</p>}
+          fallback={<p className="text-emerald-700/80 mx-auto pt-10">Fetching Competitions...</p>}
         >
           <ScheduleContainer date={searchParams.date || ""} />
         </Suspense>
