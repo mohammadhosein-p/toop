@@ -25,7 +25,7 @@ export default async function ScheduleContainer({ date }: Props) {
 
   let scheduleData: ScheduleResponse | null = null;
   scheduleData  = await fetchData<ScheduleResponse>(
-    `http://api.football-data.org/v4/matches?date=${selectedDate}`
+    `http://api.football-data.org/v4/matches?date=${selectedDate}`, ["matches", selectedDate]
   );
 
   const matchesByCompetition: { [key: string]: FootballMatch[] } = {};

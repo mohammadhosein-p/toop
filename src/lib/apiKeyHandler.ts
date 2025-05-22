@@ -3,7 +3,7 @@ export function getAPI() {
     globalThis.activeIndex = 1;
   }
   console.log(globalThis.activeIndex)
-  return process.env[`FOOTBALL_API_KEY${globalThis.activeIndex}`] || null;
+  return process.env[`FOOTBALL_API_KEY${globalThis.activeIndex}`] || "";
 }
 
 export function rotateAPI() {
@@ -12,5 +12,5 @@ export function rotateAPI() {
   } else {
     globalThis.activeIndex += 1;
   }
-  return process.env[`FOOTBALL_API_KEY${globalThis.activeIndex}`] || null;
+  return process.env[`FOOTBALL_API_KEY${globalThis.activeIndex}`] || "";
 }

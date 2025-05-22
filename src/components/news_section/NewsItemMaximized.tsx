@@ -80,13 +80,11 @@ export default function NewsItemMaximized({
                     onClick={() => setFullImage((prev) => !prev)}
                     src={article.urlToImage}
                     alt={article.title}
-                    className={`h-full mx-auto w-[${
-                      isFullImage ? "100%" : "60%"
-                    }] cursor-pointer`}
+                    className={`h-full mx-auto cursor-pointer`}
                     initial={false}
                     animate={{
                       height: isFullImage ? "100%" : "auto",
-                      // width: isFullImage ? "100%" : "60%",
+                      width: isFullImage ? "100%" : "60%",
                       objectFit: isFullImage ? "contain" : "cover",
                     }}
                     layout

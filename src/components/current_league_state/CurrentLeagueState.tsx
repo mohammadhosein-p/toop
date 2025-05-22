@@ -12,7 +12,8 @@ type Props = {
 export default async function CurrentLeagueState({ standingParam }: Props) {
   const standing = standingParam || "PL";
   const standingResult = await fetchData<Standing>(
-    `http://api.football-data.org/v4/competitions/${standing}/standings`
+    `http://api.football-data.org/v4/competitions/${standing}/standings`,
+    ["standing", standing]
   );
   console.log(standingResult);
 
@@ -62,7 +63,7 @@ export default async function CurrentLeagueState({ standingParam }: Props) {
           </div>
         ))}
       </div>
-      <Link href={"#"} className="mt-0 text-xs text-gray-700">
+      <Link href={"/standing"} className="mt-0 text-xs text-gray-700">
         View full table...
       </Link>
     </div>

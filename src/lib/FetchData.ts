@@ -1,28 +1,39 @@
-import axios from "axios";
 import { getAPI, rotateAPI } from "./apiKeyHandler";
 
-export async function fetchData<T = any>(url: string): Promise<T> {
+export async function fetchData<T = any>(
+  url: string,
+  tag?: string[]
+): Promise<T> {
   let attempts = 0;
   const maxAttempts = 3;
+  console.log(`fetching ${url}`)
 
   while (attempts < maxAttempts) {
     try {
       const apiKey = getAPI();
-      const { data } = await axios.get<T>(url, {
+
+      const res = await fetch(url, {
         headers: {
           "X-Auth-Token": apiKey,
         },
+        next: { revalidate: 60, tags: tag },
       });
 
-      return data;
-    } catch (error: any) {
-      if (error.response?.status === 429) {
+      if (res.status === 429) {
         rotateAPI();
         attempts++;
         console.warn(`API rotated. Retrying... (attempt ${attempts})`);
-      } else {
-        throw error;
+        continue;
       }
+
+      if (!res.ok) {
+        throw new Error(`Request failed with status ${res.status}`);
+      }
+
+      const data = await res.json();
+      return data as T;
+    } catch (err) {
+      throw err;
     }
   }
 
