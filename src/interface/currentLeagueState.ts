@@ -1,4 +1,4 @@
-type Table = {
+export type Table = {
   draw: number;
   goalDifference: number;
   goalsAgainst: number;
@@ -24,6 +24,9 @@ export type Standing = {
     id: number;
     name: string;
   };
+  filters: {
+    season: string;
+  }
   competition: {
     code: string;
     emblem: string;
@@ -34,6 +37,7 @@ export type Standing = {
     currentMatchday: number;
     id: number;
     endDate: string;
+    startDate: string;
   };
   standings: {
     stage: string;
