@@ -11,7 +11,17 @@ type Params = {
   };
 };
 
-export default function Home({ searchParams }: Params) {
+export default function Home({
+  searchParams,
+}: {
+  searchParams?: { [key: string]: string | string[] | undefined };
+}) {
+  const standing =
+    typeof searchParams?.standing === "string"
+      ? searchParams.standing
+      : undefined;
+  const date = typeof searchParams?.date === "string" ? searchParams.date : "";
+
   return (
     <div className="grid grid-cols-12 bg-white min-h-screen gap-4 p-4">
       <div className="col-span-3 flex flex-col gap-3">
@@ -35,7 +45,7 @@ export default function Home({ searchParams }: Params) {
               </p>
             }
           >
-            <CurrentLeagueState standingParam={searchParams.standing} />
+            <CurrentLeagueState standingParam={standing} />
           </Suspense>
         </div>
       </div>
@@ -48,7 +58,7 @@ export default function Home({ searchParams }: Params) {
             </p>
           }
         >
-          <ScheduleContainer date={searchParams.date || ""} />
+          <ScheduleContainer date={date} />
         </Suspense>
       </div>
 
