@@ -3,7 +3,6 @@
 import Image from "next/image";
 import React from "react";
 import { motion } from "framer-motion";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 type Props = {
@@ -17,6 +16,19 @@ type Props = {
   draw: number;
   lost: number;
   points: number;
+  index: number;
+};
+
+const rowVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: i * 0.04,
+      type: "spring",
+    },
+  }),
 };
 
 export default function CurrentLeagueItem({
@@ -26,6 +38,7 @@ export default function CurrentLeagueItem({
   points,
   won,
   position,
+  index,
 }: Props) {
   const router = useRouter();
 
@@ -33,44 +46,17 @@ export default function CurrentLeagueItem({
     <motion.tr
       initial="hidden"
       animate="visible"
-      onClick={() => router.push(`/team/${team.id}`)}
-      variants={{
-        hidden: { opacity: 0 },
-        visible: {
-          opacity: 1,
-          transition: {
-            staggerChildren: 0.25,
-          },
-        },
-      }}
-      transition={{
-        type: "spring",
-      }}
-      key={team.id}
+      custom={index}
+      variants={rowVariants}
       whileHover={{
-        scale: 1.1,
+        scale: 1.04,
         backgroundColor: "oklch(97.9% 0.021 166.113)",
       }}
+      onClick={() => router.push(`/team/${team.id}`)}
       className="border-b cursor-pointer border-gray-100 last:border-0"
     >
-      <motion.td
-        variants={{
-          hidden: { opacity: 0, x: -20 },
-          visible: { opacity: 1, x: 0 },
-        }}
-        transition={{ type: "spring", stiffness: 200 }}
-        className="py-1.5 pr-2"
-      >
-        {position}
-      </motion.td>
-      <motion.td
-        variants={{
-          hidden: { opacity: 0, x: -20 },
-          visible: { opacity: 1, x: 0 },
-        }}
-        transition={{ type: "spring", stiffness: 200 }}
-        className="py-1.5"
-      >
+      <td className="py-1.5 pr-2 text-gray-700">{position}</td>
+      <td className="py-1.5">
         <div className="flex items-center gap-1.5 truncate">
           <Image
             src={team.crest}
@@ -81,28 +67,22 @@ export default function CurrentLeagueItem({
           />
           <span className="truncate">{team.tla}</span>
         </div>
-      </motion.td>
-
-      {[won, draw, lost, points].map((value, index) => (
-        <motion.td
-          key={index}
-          variants={{
-            hidden: { opacity: 0, x: 20 },
-            visible: { opacity: 1, x: 0 },
-          }}
-          transition={{ type: "spring", stiffness: 200 }}
+      </td>
+      {[won, draw, lost, points].map((value, idx) => (
+        <td
+          key={idx}
           className={`py-1.5 text-center pl-2 font-medium ${
-            index === 0
+            idx === 0
               ? "text-green-500/90"
-              : index === 1
+              : idx === 1
               ? "text-yellow-500/90"
-              : index === 2
+              : idx === 2
               ? "text-red-500/90"
-              : ""
+              : "text-gray-800"
           }`}
         >
           {value}
-        </motion.td>
+        </td>
       ))}
     </motion.tr>
   );

@@ -50,6 +50,7 @@ export default async function CurrentLeagueState({ standingParam }: Props) {
                 {standingGroup.table.map((team, index) => (
                   <CurrentLeagueItem
                     key={team.team.id}
+                    index={index}
                     team={team.team}
                     position={index + 1}
                     won={team.won}
