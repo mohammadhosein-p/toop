@@ -24,99 +24,76 @@ export default function ScheduleItem({ match }: Props) {
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
-      className="bg-white rounded-xl shadow-sm p-4 pb-2 mb-3 w-full max-w-2xl mx-auto hover:shadow-lg transition-shadow duration-300"
+      className="bg-white rounded-2xl shadow-md pb-2 pt-3 px-3 mb-4 w-full max-w-2xl mx-auto hover:shadow-xl transition-shadow"
     >
       <div className="flex items-center justify-between gap-4">
-        {match.status === "FINISHED" ? (
-          <p className="px-2 py-1 text-gray-950 bg-emerald-500 font-light text-xs rounded-xl">
-            FT
-          </p>
-        ) : (
-          <motion.p
-            transition={{
-              ease: "easeIn",
-              duration: 0.3,
-            }}
-            className="text-sm text-gray-500 min-w-fit"
-          >
-            {new Date(match.utcDate).toLocaleString("en-US", {
-              day: isExpanded ? "numeric" : undefined,
-              month: isExpanded ? "short" : undefined,
-              hour: "2-digit",
-              minute: "2-digit",
-            })}
-          </motion.p>
-        )}
+        <div
+          className={`text-smfont-semibold ${
+            match.status === "FINISHED"
+              ? "bg-emerald-500 text-white"
+              : "bg-emerald-50 text-emerald-800"
+          } px-3 py-1 rounded-xl shadow-sm text-xs font-semibold`}
+        >
+          {match.status === "FINISHED"
+            ? "FT"
+            : new Date(match.utcDate).toLocaleTimeString("en-US", {
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
+        </div>
 
         <motion.div
-          className={`flex h-8 items-center gap-3 transition-all duration-300 justify-center ${
+          className={`flex items-center justify-center gap-3 transition-all duration-300 ${
             isExpanded ? "w-3/4" : "w-1/2"
           }`}
-          transition={{
-            duration: 0.3,
-          }}
         >
-          <motion.div layout transition={{ duration: 0.3 }}>
-            <Image
-              src={match.homeTeam.crest}
-              alt={match.homeTeam.tla}
-              width={isExpanded ? 32 : 24}
-              height={isExpanded ? 32 : 24}
-              className="rounded"
-            />
-          </motion.div>
+          <Image
+            src={match.homeTeam.crest}
+            alt={match.homeTeam.tla}
+            width={isExpanded ? 32 : 24}
+            height={isExpanded ? 32 : 24}
+            className="object-contain"
+          />
 
-          <motion.h2
-            transition={{ duration: 0.3 }}
-            className={`text-sm md:text-base font-medium text-gray-800 whitespace-nowrap text-center`}
-          >
+          <h2 className="text-sm md:text-base font-medium text-gray-700 text-center">
             <Link
               href={`/team/${match.homeTeam.id}`}
               className="hover:underline"
             >
               {isExpanded ? match.homeTeam.name : match.homeTeam.shortName}
             </Link>
-            <span className="text-gray-400"> vs </span>
+            <span className="text-gray-400 mx-1">vs</span>
             <Link
               href={`/team/${match.awayTeam.id}`}
               className="hover:underline"
             >
               {isExpanded ? match.awayTeam.name : match.awayTeam.shortName}
             </Link>
-          </motion.h2>
+          </h2>
 
-          <motion.div layout transition={{ duration: 0.3 }}>
-            <Image
-              src={match.awayTeam.crest}
-              alt={match.awayTeam.tla}
-              width={isExpanded ? 32 : 24}
-              height={isExpanded ? 32 : 24}
-              className="rounded"
-            />
-          </motion.div>
+          <Image
+            src={match.awayTeam.crest}
+            alt={match.awayTeam.tla}
+            width={isExpanded ? 32 : 24}
+            height={isExpanded ? 32 : 24}
+            className="object-contain"
+          />
         </motion.div>
 
-        <motion.div
-          className="text-lg cursor-pointer text-gray-600 hover:text-black transition-colors p-1 rounded-full"
+        <motion.button
           onClick={handleToggleExpand}
+          className="text-xl p-2 rounded-full hover:bg-gray-100 transition"
           initial="up"
           animate={iconControl}
-          whileHover={{
-            backgroundColor: "gray",
-            color: "white",
-            opacity: 0.8,
-          }}
           variants={{
             down: { rotate: "0deg" },
             up: { rotate: "180deg" },
           }}
-          transition={{
-            duration: 0.3,
-            ease: "easeOut",
-          }}
+          transition={{ duration: 0.125 }}
+          aria-label="Toggle details"
         >
-          <IoIosArrowUp />
-        </motion.div>
+          <IoIosArrowUp className="text-gray-600" />
+        </motion.button>
       </div>
 
       <motion.div
@@ -126,39 +103,43 @@ export default function ScheduleItem({ match }: Props) {
           opacity: isExpanded ? 1 : 0,
         }}
         transition={{ duration: 0.25 }}
-        className="overflow-hidden mt-3 text-sm text-emerald-900"
+        className="overflow-hidden mt-4 text-sm text-gray-800"
       >
-        <div className="border-t pt-3 space-y-1">
+        <div className="border-t pt-4 space-y-2 text-sm">
           {match.status === "FINISHED" && (
             <>
-              <h2 className="w-full pr-6 flex justify-center">
-                <p className="text-black opacity-50 mr-1">FT:</p>{" "}
-                {match.score.fullTime.home} - {match.score.fullTime.away}
-              </h2>
-              <h3 className="w-full pr-6 flex justify-center">
-                <p className="text-black opacity-40 mr-1">HT:</p>{" "}
-                {match.score.halfTime.home} - {match.score.halfTime.away}
-              </h3>
+              <p className="text-center text-base font-medium text-emerald-700">
+                Final Score: {match.score.fullTime.home} -{" "}
+                {match.score.fullTime.away}
+              </p>
+              <p className="text-center text-xs text-gray-500">
+                Half Time: {match.score.halfTime.home} -{" "}
+                {match.score.halfTime.away}
+              </p>
             </>
           )}
           <p>
-            <strong>Match Day:</strong> {match.matchday}
+            <strong className="text-emerald-600">Match Day:</strong>{" "}
+            {match.matchday}
           </p>
           <p>
-            <strong>Group:</strong> {match.group || "none"}
+            <strong className="text-emerald-600">Group:</strong>{" "}
+            {match.group || "N/A"}
           </p>
           <p>
-            <strong>Stage:</strong> {match.stage || "none"}
+            <strong className="text-emerald-600">Stage:</strong>{" "}
+            {match.stage || "N/A"}
           </p>
           <p>
-            <strong>Season:</strong>{" "}
+            <strong className="text-emerald-600">Season:</strong>{" "}
             {new Date(match.season.startDate).getFullYear()} -{" "}
             {new Date(match.season.endDate).getFullYear()}
           </p>
+
           {match.referees.length > 0 && (
             <div>
-              <strong>Referees:</strong>
-              <ul className="list-disc list-inside text-xs mt-1 text-emerald-800">
+              <strong className="text-emerald-600">Referees:</strong>
+              <ul className="list-disc list-inside mt-1 text-gray-700 text-xs">
                 {match.referees.map((referee) => (
                   <li key={referee.id}>
                     {referee.name}{" "}
