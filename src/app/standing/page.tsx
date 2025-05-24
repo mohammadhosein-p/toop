@@ -9,7 +9,7 @@ type Props = {
   };
 };  
 
-export default function page({
+export default async function page({
   searchParams,
 }: {
   searchParams?: { [key: string]: string | string[] | undefined };

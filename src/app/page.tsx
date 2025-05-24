@@ -4,14 +4,7 @@ import FollowingLeague from "@/components/folllowing_league/FollowingLeague";
 import { Suspense } from "react";
 import NewsContainer from "@/components/news_section/NewsContainer";
 
-type Params = {
-  searchParams: {
-    standing?: string;
-    date?: string;
-  };
-};
-
-export default function Home({
+export default async function Home({
   searchParams,
 }: {
   searchParams?: { [key: string]: string | string[] | undefined };
