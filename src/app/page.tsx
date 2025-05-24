@@ -4,7 +4,8 @@ import FollowingLeague from "@/components/folllowing_league/FollowingLeague";
 import { Suspense } from "react";
 import NewsContainer from "@/components/news_section/NewsContainer";
 
-export default async function Home({
+export default function Home({
+  // @ts-ignore
   searchParams,
 }: {
   searchParams?: { [key: string]: string | string[] | undefined };

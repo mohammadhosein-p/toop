@@ -9,7 +9,8 @@ type Props = {
   };
 };  
 
-export default async function page({
+export default function page({
+  // @ts-ignore
   searchParams,
 }: {
   searchParams?: { [key: string]: string | string[] | undefined };

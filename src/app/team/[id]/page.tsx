@@ -12,7 +12,10 @@ type Params = {
   params: { id: string };
 };
 
-export default async function TeamPage({ params }: Params) {
+export default async function TeamPage({
+  // @ts-ignore
+  params,
+}: Params) {
   const teamId = params.id;
   const teamData = await fetchData<TeamData>(
     `https://api.football-data.org/v4/teams/${teamId}`,
