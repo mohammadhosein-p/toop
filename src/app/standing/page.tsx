@@ -6,10 +6,17 @@ import React, { Suspense } from "react";
 type Props = {
   searchParams: {
     league: string;
-  }
-};
+  };
+};  
 
-export default function page({searchParams: { league }}: Props) {
+export default function page({
+  searchParams,
+}: {
+  searchParams?: { [key: string]: string | string[] | undefined };
+}) {
+  const league =
+    typeof searchParams?.league === "string" ? searchParams.league : "";
+
   return (
     <div className="grid grid-cols-12 bg-white min-h-screen gap-4 p-4">
       <div className="col-span-3  flex-col flex gap-3">
