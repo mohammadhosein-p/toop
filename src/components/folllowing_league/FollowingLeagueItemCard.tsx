@@ -10,6 +10,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 type Props = {
   item: Competition;
   index: number;
+  isHome: boolean;
 };
 
 const divVariant = {
@@ -26,7 +27,11 @@ const divVariant = {
   }),
 };
 
-export default function FollowingLeagueItemCard({ item, index }: Props) {
+export default function FollowingLeagueItemCard({
+  item,
+  index,
+  isHome,
+}: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -55,7 +60,9 @@ export default function FollowingLeagueItemCard({ item, index }: Props) {
       }}
       className="grid grid-cols-7 pr-2 gap-2 rounded-xl bg-white shadow-sm"
     >
-      <div className="flex col-span-5 items-center gap-3 p-3">
+      <div
+        className={`flex col-span-${isHome ? "5" : "7"} items-center gap-3 p-3`}
+      >
         <Image
           src={item.emblem}
           width={32}
@@ -72,14 +79,15 @@ export default function FollowingLeagueItemCard({ item, index }: Props) {
           <span className="text-xs text-gray-500">{item.area.name}</span>
         </div>
       </div>
-
-      <button
-        onClick={handlePreviewClick}
-        className="col-span-2 self-center text-sm font-medium bg-emerald-500 hover:bg-emerald-600 
+      {isHome && (
+        <button
+          onClick={handlePreviewClick}
+          className="col-span-2 self-center text-sm font-medium bg-emerald-500 hover:bg-emerald-600 
           text-white px-4 cursor-pointer py-2 rounded-xl transition-all duration-200 shadow-sm hover:shadow-md"
-      >
-        Preview
-      </button>
+        >
+          Preview
+        </button>
+      )}
     </motion.div>
   );
 }

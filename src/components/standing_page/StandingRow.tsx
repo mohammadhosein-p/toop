@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Table } from "@/interface/currentLeagueState";
+import Link from "next/link";
 
 type Props = {
   team: Table;
@@ -23,7 +24,7 @@ export default function StandingRow({ team, index }: Props) {
     }),
     hover: {
       scale: 1.02,
-      backgroundColor: "#ecfdf5", // سبز خیلی روشن هنگام هاور
+      backgroundColor: "#ecfdf5",
       transition: { duration: 0.2 },
     },
   };
@@ -42,14 +43,18 @@ export default function StandingRow({ team, index }: Props) {
         {team.position}
       </td>
       <td className="p-2 flex items-center gap-3">
-        <Image
-          src={team.team.crest}
-          alt={team.team.name}
-          className="h-6 w-6"
-          height={24}
-          width={24}
-        />
-        <span className="text-gray-800 font-medium">{team.team.shortName}</span>
+        <Link href={`/team/${team.team.id}`} className="flex flex-row gap-1 hover:underline">
+          <Image
+            src={team.team.crest}
+            alt={team.team.name}
+            className="h-6 w-6"
+            height={24}
+            width={24}
+          />
+          <span className="text-gray-800 font-medium">
+            {team.team.shortName}
+          </span>
+        </Link>
       </td>
       <td className="p-2 text-center">{team.playedGames}</td>
       <td className="p-2 text-center">{team.won}</td>

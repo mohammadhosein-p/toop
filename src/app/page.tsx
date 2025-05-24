@@ -23,7 +23,7 @@ export default function Home({ searchParams }: Params) {
               </p>
             }
           >
-            <FollowingLeague />
+            <FollowingLeague isHome />
           </Suspense>
         </div>
 

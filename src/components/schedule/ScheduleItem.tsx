@@ -2,6 +2,7 @@
 import { FootballMatch } from "@/interface/competitionSchedule";
 import { motion, useAnimationControls } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 import { IoIosArrowUp } from "react-icons/io";
 
@@ -34,7 +35,7 @@ export default function ScheduleItem({ match }: Props) {
           <motion.p
             transition={{
               ease: "easeIn",
-              duration: .3
+              duration: 0.3,
             }}
             className="text-sm text-gray-500 min-w-fit"
           >
@@ -69,9 +70,19 @@ export default function ScheduleItem({ match }: Props) {
             transition={{ duration: 0.3 }}
             className={`text-sm md:text-base font-medium text-gray-800 whitespace-nowrap text-center`}
           >
-            {isExpanded ? match.homeTeam.name : match.homeTeam.shortName}
+            <Link
+              href={`/team/${match.homeTeam.id}`}
+              className="hover:underline"
+            >
+              {isExpanded ? match.homeTeam.name : match.homeTeam.shortName}
+            </Link>
             <span className="text-gray-400"> vs </span>
-            {isExpanded ? match.awayTeam.name : match.awayTeam.shortName}
+            <Link
+              href={`/team/${match.awayTeam.id}`}
+              className="hover:underline"
+            >
+              {isExpanded ? match.awayTeam.name : match.awayTeam.shortName}
+            </Link>
           </motion.h2>
 
           <motion.div layout transition={{ duration: 0.3 }}>

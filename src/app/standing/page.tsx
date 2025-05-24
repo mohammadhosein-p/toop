@@ -12,17 +12,19 @@ type Props = {
 export default function page({searchParams: { league }}: Props) {
   return (
     <div className="grid grid-cols-12 bg-white min-h-screen gap-4 p-4">
-      <div className="col-span-3 flex-col flex gap-3">
-        <div className="h-[33vh]">
+      <div className="col-span-3  flex-col flex gap-3">
+        <div className="h-[40vh] rounded-lg bg-gray-200 overflow-y-auto">
           <LeagueInfoCard standing={league} />
         </div>
-        <div className="bg-gray-200 rounded-lg p-0 flex flex-col h-[60vh]">
+        <div className="bg-gray-200 rounded-lg p-0 flex flex-col h-[53vh]">
           <Suspense
             fallback={
-              <p className="mx-auto text-emerald-900/70 text-4xl">Fetching Leagues...</p>
+              <p className="mx-auto text-emerald-900/70 text-4xl">
+                Fetching Leagues...
+              </p>
             }
           >
-            <FollowingLeague />
+            <FollowingLeague isHome={false} />
           </Suspense>
         </div>
       </div>

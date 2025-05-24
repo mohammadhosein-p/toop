@@ -1,65 +1,81 @@
-// components/league/LeagueInfoCard.tsx
-import React from "react";
 import { Standing } from "@/interface/currentLeagueState";
 import { fetchData } from "@/lib/FetchData";
 import Image from "next/image";
+import {
+  FaMapMarkerAlt,
+  FaCalendarAlt,
+  FaGlobe,
+  FaFlag,
+  FaTrophy,
+} from "react-icons/fa";
 import { format } from "date-fns";
-import Link from "next/link";
+import InfoCard from "../teamPage/InfoCard";
 
-type Props = {
+interface Props {
   standing: string;
-};
+}
 
-export default async function LeagueInfoCard({ standing }: Props) {
+export default async function LeagueInfo({ standing }: Props) {
   const standingResult = await fetchData<Standing>(
     `http://api.football-data.org/v4/competitions/${
       standing || "PL"
     }/standings`,
     ["standing", standing]
   );
-  console.log(standingResult);
 
   const { competition, area, season, filters } = standingResult;
 
   return (
-    <div className="bg-gray-100 text-black rounded-lg p-4 h-full flex flex-col gap-3">
-      <div>
-        <div className="flex flex-row items-center gap-3">
-          <Image
-            src={competition.emblem}
-            alt={competition.name}
-            width={50}
-            height={50}
-          />
-          <h2 className="text-xl text-emerald-900 font-bold">
+    <div className="text-gray-800 overflow-y-auto flex flex-col gap-4 p-4">
+      <div className="flex items-center gap-4 border-b pb-3">
+        <Image
+          src={competition.emblem}
+          alt={competition.name}
+          width={60}
+          height={60}
+          className="w-12 h-12 object-contain"
+        />
+        <div>
+          <h2 className="text-2xl font-bold text-emerald-700">
             {competition.name}
           </h2>
-        </div>
-        <div className="flex flex-row items-centerx gap-3">
-          <Image
-            src={area.flag}
-            alt={competition.name}
-            width={30}
-            height={30}
-          />
-          <p className="text-lg text-gray-700">{area.name}</p>
+          <div className="flex items-center gap-2 mt-1 text-sm text-emerald-600">
+            <Image
+              src={area.flag}
+              alt={area.name}
+              width={20}
+              height={20}
+              className="w-4 h-4 object-contain"
+            />
+            <span>{area.name}</span>
+          </div>
         </div>
       </div>
-      <div className="text-sm text-gray-500 flex flex-col gap-1">
-        <p>
-          Season: {Number(filters.season)} -{" "}
-          {String(Number(filters.season) + 1).slice(-2)}
-        </p>
-        <p>Matchday: {season.currentMatchday}</p>
-        <p>Starts: {format(new Date(season.startDate), "yyyy-MM-dd")}</p>
-        <p>Ends: {format(new Date(season.endDate), "yyyy-MM-dd")}</p>
 
-        <Link
-          href={"/"}
-          className="text-sm text-emerald-700/80 cursor-pointer hover:underline"
-        >
-          Home Page...
-        </Link>
+      <div className="grid grid-cols-2 gap-4 text-sm">
+        <InfoCard
+          icon={<FaCalendarAlt />}
+          label="Season"
+          value={`${Number(filters.season)} - ${String(
+            Number(filters.season) + 1
+          ).slice(-2)}`}
+        />
+        <InfoCard
+          icon={<FaTrophy />}
+          label="Matchday"
+          value={season.currentMatchday}
+        />
+        <InfoCard
+          icon={<FaCalendarAlt />}
+          label="Start Date"
+          value={format(new Date(season.startDate), "yyyy-MM-dd")}
+        />
+        <InfoCard
+          icon={<FaCalendarAlt />}
+          label="End Date"
+          value={format(new Date(season.endDate), "yyyy-MM-dd")}
+        />
+        <InfoCard icon={<FaMapMarkerAlt />} label="Area" value={area.name} />
       </div>
     </div>
   );
