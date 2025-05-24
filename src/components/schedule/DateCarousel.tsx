@@ -39,12 +39,12 @@ export default function DateCarousel() {
   return (
     <>
       <div className="flex items-center justify-center gap-2 mb-2 overflow-x-auto py-2 px-4">
-        {dates.map((date) => {
+        {dates.map((date, index) => {
           const formatted = format(date, "yyyy-MM-dd");
           const isSelected = formatted === currDate;
 
           return (
-            <>
+            <div key={index}>
               <motion.button
                 key={date.toString()}
                 onClick={() => handleDateChange(date)}
@@ -71,7 +71,7 @@ export default function DateCarousel() {
                   <div>{getDateLabel(date)}</div>
                 )}
               </motion.button>
-            </>
+            </div>
           );
         })}
       </div>

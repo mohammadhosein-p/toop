@@ -1,5 +1,5 @@
 
-type Competition = {
+export type Competition = {
   id: number;
   area: {
     id: number;
