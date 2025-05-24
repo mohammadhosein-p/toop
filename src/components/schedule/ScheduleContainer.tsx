@@ -15,6 +15,9 @@ const PRIORITY_COMPETITIONS = [
   "Premier League",
   "UEFA Champions League",
   "Serie A",
+  "Bundesliga",
+  "Ligue 1",
+  "Primera Division",
 ];
 
 export default async function ScheduleContainer({ date }: Props) {
@@ -24,8 +27,9 @@ export default async function ScheduleContainer({ date }: Props) {
   console.log("selectedDate", selectedDate);
 
   let scheduleData: ScheduleResponse | null = null;
-  scheduleData  = await fetchData<ScheduleResponse>(
-    `http://api.football-data.org/v4/matches?date=${selectedDate}`, ["matches", selectedDate]
+  scheduleData = await fetchData<ScheduleResponse>(
+    `http://api.football-data.org/v4/matches?date=${selectedDate}`,
+    ["matches", selectedDate]
   );
 
   const matchesByCompetition: { [key: string]: FootballMatch[] } = {};
@@ -57,7 +61,7 @@ export default async function ScheduleContainer({ date }: Props) {
       <h1 className="text-2xl font-bold text-emerald-900">Competitions</h1>
 
       <DateCarousel />
-      
+
       <div className="flex-1 overflow-y-auto space-y-4 pr-4 pb-3">
         {sortedCompetitions.length > 0 ? (
           sortedCompetitions.map(([competitionName, matches]) => (

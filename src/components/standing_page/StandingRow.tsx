@@ -4,6 +4,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { Table } from "@/interface/currentLeagueState";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 type Props = {
   team: Table;
@@ -29,6 +30,8 @@ export default function StandingRow({ team, index }: Props) {
     },
   };
 
+  const router = useRouter();
+
   return (
     <motion.tr
       key={team.team.id}
@@ -38,12 +41,13 @@ export default function StandingRow({ team, index }: Props) {
       whileHover="hover"
       variants={rowVariants}
       className="border-b border-emerald-100 bg-white text-gray-700"
+      onClick={() => router.push(`/team/${team.team.id}`)}
     >
       <td className="pl-3 py-2 text-center font-medium text-emerald-700">
         {team.position}
       </td>
       <td className="p-2 flex items-center gap-3">
-        <Link href={`/team/${team.team.id}`} className="flex flex-row gap-1 hover:underline">
+        <div className="flex flex-row gap-1 hover:underline">
           <Image
             src={team.team.crest}
             alt={team.team.name}
@@ -54,7 +58,7 @@ export default function StandingRow({ team, index }: Props) {
           <span className="text-gray-800 font-medium">
             {team.team.shortName}
           </span>
-        </Link>
+        </div>
       </td>
       <td className="p-2 text-center">{team.playedGames}</td>
       <td className="p-2 text-center">{team.won}</td>

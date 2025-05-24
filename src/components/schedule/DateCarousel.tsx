@@ -81,7 +81,7 @@ export default function DateCarousel() {
           onClick={() => handleDateChange(new Date())}
           className="pl-6 text-sm text-emerald-700/80 cursor-pointer hover:underline"
         >
-          get back to today
+          ← Back to Today
         </span>
       ) : null}
     </>

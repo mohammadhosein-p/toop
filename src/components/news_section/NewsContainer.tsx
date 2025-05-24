@@ -15,7 +15,6 @@ export default async function NewsContainer({filter} : Props) {
     ["news"]
   );
 
-  console.log(response);
 
   if (!response || response.status !== "ok" || response.articles.length === 0) {
     return (
