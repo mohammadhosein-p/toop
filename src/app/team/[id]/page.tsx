@@ -18,12 +18,14 @@ export default async function TeamPage({ params }: Params) {
     `https://api.football-data.org/v4/teams/${teamId}`,
     ["team", teamId]
   );
-  const leagueCode = teamData.runningCompetitions?.[0]?.code || "PL";
+  const leagueCode =
+    teamData.runningCompetitions?.filter((item) => item.type === "LEAGUE")[0]
+      .code || "PL";
 
   return (
     <div className="grid grid-cols-12 bg-white min-h-screen gap-4 p-4">
       <div className="col-span-3 flex flex-col gap-3">
-        <div className="bg-gray-200 rounded-lg p-4 h-[39vh] overflow-y-hidden">
+        <div className="bg-gray-200 rounded-lg p-4 h-[39vh] overflow-y-auto">
           <TeamInfo team={teamData} />
         </div>
 
