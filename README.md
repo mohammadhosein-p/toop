@@ -1,36 +1,73 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Toop
+
+This project is a hands-on personal sample built to enhance my resume and showcase proficiency with modern frontend technologies. The main objectives are:
+
+- **Page Architecture with Next.js**: Utilizing Server-Side Rendering (SSR) and Static Site Generation (SSG) to optimize performance and SEO.
+- **Data Fetching**: Implementing `fetch` in Next.js with automatic caching to keep football scores and news up to date.
+- **Simple and Accessible UI**: Crafting a responsive design with Tailwind CSS for live league results, match schedules, and latest news.
+- **TypeScript & TSX Integration**: Writing type-safe components and leveraging JSX features within a Next.js project.
+- **Consuming Multiple External APIs**:
+
+  - Football data (league tables and match schedules) from `football-data.org`.
+  - Daily football news from `newsapi.org`.
+
+## Project Preview
+
+View the project’s functionality and user interface via video or GIF:
+
+- [Preview 1](https://drive.google.com/file/d/1f0S5s9Wa6m5uCkSMg5Nr_mJ8m2CghHVV/view?usp=sharing)
+- [Preview 2](https://drive.google.com/file/d/1XEUlZBP4zx4BWWmfpZy3kSxF-7GpXGD-/view?usp=sharing)
+- [Preview 3](https://drive.google.com/file/d/1rcB6T1p2QTJUKFdBOc6QntAeowqscGxe/view?usp=sharing)
 
 ## Getting Started
 
-First, run the development server:
+To run the project locally, follow these steps:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. Clone the repository:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+   ```bash
+   git clone https://github.com/your-username/toop.git
+   cd toop
+   ```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+2. Install dependencies:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+   ```bash
+   npm install
+   ```
 
-## Learn More
+3. Create a `.env.local` file and add your API keys.
+4. Start the development server:
 
-To learn more about Next.js, take a look at the following resources:
+   ```bash
+   npm run dev
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+5. Open your browser and navigate to `http://localhost:3000`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Customization
 
-## Deploy on Vercel
+Feel free to tweak this project to suit your needs by:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Adding custom styles or themes with Tailwind CSS
+- Integrating other APIs or creating new Next.js routes
+- Modifying component structures or adding custom pages
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Bug Reports
+
+If you encounter any issues:
+
+1. Check existing Issues to avoid duplicates.
+2. Open a new Issue with a clear title and detailed description.
+3. Attach screenshots or logs if possible.
+
+## Known Issues
+
+- **Responsive Design**: Some sections may not display optimally on extremely small or large screens.
+- **searchParams on Home Page**:Limitations in newer Next.js versions required SSR for passing parameters, which may affect routing behavior. (Despite hours of effort, the issue could not be resolved, and the only viable solution found was using Server-Side Components (SSC), which diverged from the original project goals.)
+
+## Upcoming Features
+
+- User profile page to display favorite leagues and prioritize matches
+- Final deployment on cloud platforms (Vercel, Netlify, or custom server)
+- Dark theme support
