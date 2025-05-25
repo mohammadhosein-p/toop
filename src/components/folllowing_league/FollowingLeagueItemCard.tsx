@@ -8,9 +8,13 @@ import { motion } from "framer-motion";
 import { useRouter, useSearchParams } from "next/navigation";
 
 type Props = {
-  item: Competition;
   index: number;
+  code: string;
+  emblem: string;
+  name: string;
   isHome: boolean;
+  areaName: string;
+  id: number;
 };
 
 const divVariant = {
@@ -28,7 +32,11 @@ const divVariant = {
 };
 
 export default function FollowingLeagueItemCard({
-  item,
+  areaName,
+  id,
+  code,
+  emblem,
+  name,
   index,
   isHome,
 }: Props) {
@@ -40,7 +48,7 @@ export default function FollowingLeagueItemCard({
   ) => {
     e.preventDefault();
     const currentParams = new URLSearchParams(searchParams.toString());
-    currentParams.set("standing", item.code);
+    currentParams.set("standing", code);
     router.push(`?${currentParams.toString()}`);
   };
 
@@ -61,25 +69,27 @@ export default function FollowingLeagueItemCard({
       className="grid grid-cols-7 pr-2 gap-2 rounded-xl bg-white shadow-sm"
     >
       <div
-        className={`flex col-span-${isHome ? "5" : "7"} items-center gap-3 p-3`}
+        className={`flex ${
+          isHome ? "col-span-5" : "col-span-7"
+        } items-center gap-3 p-3`}
       >
         <Image
-          src={item.emblem}
+          src={emblem}
           width={32}
           height={32}
-          alt={item.code}
+          alt={code}
           className="object-contain w-8 h-8 rounded-md drop-shadow-sm"
         />
-        <div className="flex flex-col truncate">
-          <Link href={`/standing?league=${item.id}`}>
-            <span className="text-sm font-semibold text-gray-800 hover:text-emerald-700 cursor-pointer truncate">
-              {item.name}
-            </span>
+        <div className="flex flex-col">
+          <Link href={`/standing?league=${id}`}>
+            <h2 className="text-sm text-gray-800 hover:text-emerald-700 cursor-pointer truncate">
+              {name}
+            </h2>
           </Link>
-          <span className="text-xs text-gray-500">{item.area.name}</span>
+          <span className="text-xs text-gray-500">{areaName}</span>
         </div>
       </div>
-      {isHome && (
+      {isHome ? (
         <button
           onClick={handlePreviewClick}
           className="col-span-2 self-center text-sm font-medium bg-emerald-500 hover:bg-emerald-600 
@@ -87,6 +97,8 @@ export default function FollowingLeagueItemCard({
         >
           Preview
         </button>
+      ) : (
+        <div className="hidden" />
       )}
     </motion.div>
   );

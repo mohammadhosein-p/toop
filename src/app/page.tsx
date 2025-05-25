@@ -4,12 +4,14 @@ import FollowingLeague from "@/components/folllowing_league/FollowingLeague";
 import { Suspense } from "react";
 import NewsContainer from "@/components/news_section/NewsContainer";
 
-export default function Home({
-  // @ts-ignore
-  searchParams,
-}: {
-  searchParams?: { [key: string]: string | string[] | undefined };
-}) {
+interface PageProps {
+  searchParams?: {
+    standing?: string;
+    date?: string;
+  };
+}
+
+export default function Home({ searchParams }: PageProps) {
   const standing =
     typeof searchParams?.standing === "string"
       ? searchParams.standing
@@ -27,7 +29,7 @@ export default function Home({
               </p>
             }
           >
-            <FollowingLeague isHome />
+            <FollowingLeague isHome={true} />
           </Suspense>
         </div>
 

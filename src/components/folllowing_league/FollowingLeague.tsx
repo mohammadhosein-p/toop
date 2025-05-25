@@ -6,7 +6,7 @@ interface Props {
   isHome: boolean;
 }
 
-export default async function FollowingLeague({isHome}:Props) {
+export default async function FollowingLeague({ isHome }: Props) {
   const leagues = await fetchData<LeaguesResponse>(
     "http://api.football-data.org/v4/competitions/",
     ["competitions"]
@@ -21,7 +21,16 @@ export default async function FollowingLeague({isHome}:Props) {
 
       <div className="space-y-1.5 px-2 pb-4">
         {competitionList?.map((item, index) => (
-          <FollowingLeagueItemCard isHome={isHome} item={item} index={index} key={index} />
+          <FollowingLeagueItemCard
+            isHome={isHome}
+            areaName={item.area.name}
+            code={item.code}
+            emblem={item.emblem}
+            name={item.name}
+            id={item.id}
+            index={index}
+            key={index}
+          />
         ))}
       </div>
     </div>
