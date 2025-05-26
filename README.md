@@ -15,9 +15,10 @@ This project is a hands-on personal sample built to enhance my resume and showca
 
 View the project’s functionality and user interface via video or GIF:
 
-- [Preview 1](https://drive.google.com/file/d/1f0S5s9Wa6m5uCkSMg5Nr_mJ8m2CghHVV/view?usp=sharing)
-- [Preview 2](https://drive.google.com/file/d/1XEUlZBP4zx4BWWmfpZy3kSxF-7GpXGD-/view?usp=sharing)
-- [Preview 3](https://drive.google.com/file/d/1rcB6T1p2QTJUKFdBOc6QntAeowqscGxe/view?usp=sharing)
+- [Project Preview 1](https://drive.google.com/file/d/1f0S5s9Wa6m5uCkSMg5Nr_mJ8m2CghHVV/view?usp=sharing)
+- [Project Preview 2](https://drive.google.com/file/d/1XEUlZBP4zx4BWWmfpZy3kSxF-7GpXGD-/view?usp=sharing)
+- [Project Preview 3](https://drive.google.com/file/d/1rcB6T1p2QTJUKFdBOc6QntAeowqscGxe/view?usp=sharing)
+- [Project Demo](https://drive.google.com/file/d/1cY12rsIYN3K1uZKyNs6RuaqegRV_uTNY/view?usp=sharing)
 
 ## Getting Started
 
@@ -26,7 +27,7 @@ To run the project locally, follow these steps:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/toop.git
+   git clone https://github.com/mohammadhosein-p/toop.git
    cd toop
    ```
 
@@ -37,6 +38,8 @@ To run the project locally, follow these steps:
    ```
 
 3. Create a `.env.local` file and add your API keys.
+    * All necessary API-keys are provided within the project and the .env file for convenience.
+    
 4. Start the development server:
 
    ```bash
